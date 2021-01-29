@@ -1,0 +1,82 @@
+﻿@model DevonAssignment.ViewModel.DetailsVM
+
+@{
+    ViewBag.Title = "Home Page";
+
+    var themeColors = new List<SelectListItem>();
+    themeColors.Add(new SelectListItem { Value = "Black", Text = "Black" });
+    themeColors.Add(new SelectListItem { Value = "Blue", Text = "Blue" });
+    themeColors.Add(new SelectListItem { Value = "Green", Text = "Green" });
+    themeColors.Add(new SelectListItem { Value = "Red", Text = "Red" });
+
+    var cities = new List<SelectListItem>();
+    cities.Add(new SelectListItem { Value = "Bangalore", Text = "Bangalore" });
+    cities.Add(new SelectListItem { Value = "Chennai", Text = "Chennai" });
+    cities.Add(new SelectListItem { Value = "Delhi", Text = "Delhi" });
+    cities.Add(new SelectListItem { Value = "Mumbai", Text = "Mumbai" });
+
+    var skills = new List<string>();
+    skills.Add("C#");
+    skills.Add("Java");
+    skills.Add("Angular");
+
+}
+
+
+@using (Html.BeginForm("Index", "Home", FormMethod.Post, new { id = "themeForm", name= "themeForm" }))
+{
+    <div class="row" style="margin-top:30px;">
+        <div class="col-md-4">
+            @Html.Label("Theme Color")
+            @Html.DropDownListFor(x => x.ThemeColor, new SelectList(themeColors, "Value", "Text"), "Select Theme..", new { onchange = "ThemeChanged()" })
+        </div>
+    </div>
+
+
+<div style="margin-top:50px;margin-left:50px;font-family:@Model.ThemeDetails.FontFamily;">
+    <div class="row">
+        <div class="col-md-4">
+            @Html.LabelFor(x => x.Details.Name)
+            @Html.TextBoxFor(x => x.Details.Name)
+        </div>
+    </div>
+    <div class="row" style="margin-top:10px;">
+        <div class="col-md-1">
+            @Html.RadioButtonFor(x => x.Details.Gender, "Male")
+            @Html.Label("Male")
+        </div>
+        <div class="col-md-2">
+            @Html.RadioButtonFor(x => x.Details.Gender, "Female")
+            @Html.Label("Female")
+        </div>
+    </div>
+    <div class="row" style="margin-top:10px;">
+        <div class="col-md-4">
+            @Html.DropDownListFor(m => m.Details.City, new SelectList(cities, "Value", "Text"), "Select City..")
+        </div>
+    </div>
+
+    <div class="row" style="margin-top:10px;">
+        <div class="col-md-4">
+            @Html.Label("Skills:")
+            @foreach (var item in skills)
+            {
+                @Html.CheckBox(item);
+                @Html.Label(item, new { style = "margin-left: 5px;margin-right: 10px" });
+            }
+        </div>
+    </div>
+    <div class="row" style="margin-top:10px;">
+        <div class="col-md-4">
+            <input type="button" value="Submit" style="font-family:@Model.ThemeDetails.FontFamily;color:@Model.ThemeDetails.FontColor;background-color: @Model.ThemeDetails.BackgroundColor;">
+        </div>
+    </div>
+</div>
+}
+
+<script type="text/javascript">
+
+    function ThemeChanged() {
+        document.themeForm.submit();
+    }
+</script>
